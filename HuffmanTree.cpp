@@ -23,27 +23,23 @@ void HuffmanTree::destroyTree(TreeNode* node) noexcept {
 }
 
 
-HuffmanTree HuffmanTree::buildFromHeader(std::vector<std::pair<std::string, std::string> > headerIn) {
+HuffmanTree HuffmanTree::buildFromHeader(const std::vector<std::pair<std::string, std::string>>& headerIn) {
     //check if we have an empty header file
+    HuffmanTree HFtree;
     if (headerIn.empty())
-        return HuffmanTree();
-
-    //check if we have a root
-    if (!root)
-        root = new TreeNode();
+        return HFtree;
 
     //loop for each word
-    for (auto i = 0; i < headerIn.size(); i++) {
-        //create a temp word for readbility
-        std::string address = headerIn.at(i).second;
-        std::string word = headerIn.at(i).first;
-        buildTree(address, word);
+    for (const auto&[address, word]: headerIn) {
+        HFtree.buildTree(address, word);
     }
 
-    return HuffmanTree();
+    return HFtree;
 }
 
-void HuffmanTree::buildTree(std::string address, std::string word) {
+void HuffmanTree::buildTree(const std::string& address, const std::string& word) {
+    if (!root) root = new TreeNode();
+
     TreeNode *curr = root;
     for (char c: address) {
         if (c == '0') {

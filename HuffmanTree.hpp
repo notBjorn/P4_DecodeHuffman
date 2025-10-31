@@ -16,13 +16,13 @@ class HuffmanTree {
     HuffmanTree() = default;
     ~HuffmanTree();
 
-    static HuffmanTree buildFromHeader(std::vector<std::pair<std::string, std::string>>);
+    static HuffmanTree buildFromHeader(const std::vector<std::pair<std::string, std::string>>& headerIn);
     error_type decode(std::ifstream&, std::ofstream&);
 
 private:
-    static TreeNode* root;
-    static void destroyTree(TreeNode*) noexcept;
-    static void buildTree(std::string address, std::string word);
+    TreeNode* root {nullptr};
+     void destroyTree(TreeNode*) noexcept;
+     void buildTree(const std::string& address, const std::string& word);
 
 
 };

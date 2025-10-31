@@ -12,6 +12,8 @@
 //#include "HuffmanTree.hpp"
 #include <algorithm>
 
+#include "HuffmanTree.hpp"
+
 namespace fs = std::filesystem;
 
 void validateReadFiles(const fs::path& hdrFile, const fs::path& codeFile);
@@ -60,12 +62,13 @@ int main(int argc, char *argv[]) {
     if ( error_type status; (status = readHeader(headPath, header_pairs)) != NO_ERROR)
         exitOnError(status, headPath.string());
 
-    HuffmanTree decoder();
-    auto build_status = decoder.buildFromHeader(header_pairs);
-    // ...
+    HuffmanTree decoder = HuffmanTree::buildFromHeader(header_pairs);
+
+
+
     // open the input .code file (call it code_stream) and .tokens_decoded files (out_stream)
     atuo decode_status = decoder.decode(code_stream, out_stream)
-    // ...
+
 
 
 
