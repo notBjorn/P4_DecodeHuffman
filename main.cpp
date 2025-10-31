@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
 
 
     // open the input .code file (call it code_stream) and .tokens_decoded files (out_stream)
-    atuo decode_status = decoder.decode(code_stream, out_stream)
+    auto decode_status = decoder.decode(code_stream, out_stream)
 
 
 
