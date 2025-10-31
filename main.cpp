@@ -59,10 +59,21 @@ int main(int argc, char *argv[]) {
 
     // ** Huffman tree creation should be done here
 
+    std::ifstream code_in(codePath);
+    std::ofstream token_out(decodePath, std::ios::out | std::ios::trunc);
+    if (error_type status = decoder.decode(code_in, token_out); status != NO_ERROR) {
+        exitOnError(status, codePath.string());
+    }
+    code_in.close();
+    token_out.close();
+
+
+
+
 
 
     // open the input .code file (call it code_stream) and .tokens_decoded files (out_stream)
-    auto decode_status = decoder.decode(code_stream, out_stream);
+    //auto decode_status = decoder.decode(code_stream, out_stream);
 
 
 

@@ -30,7 +30,7 @@ HuffmanTree HuffmanTree::buildFromHeader(const std::vector<std::pair<std::string
         return HFtree;
 
     //loop for each word
-    for (const auto&[address, word]: headerIn) {
+    for (const auto&[word, address]: headerIn) {
         HFtree.buildTree(address, word);
     }
 
@@ -55,4 +55,42 @@ void HuffmanTree::buildTree(const std::string& address, const std::string& word)
         }
     }
     curr->setWord(word);
+    return;
 }
+
+error_type HuffmanTree::decode(std::ifstream& code_in, std::ofstream& token_out) {
+    if (!root) {
+        std::cerr << "Error: decode called with empty Huffman tree\n";
+        return ERR_TYPE_NOT_FOUND;
+    }
+    if (!code_in.is_open()) {
+        std::cerr << "Error: input stream is not open\n";
+        return UNABLE_TO_OPEN_FILE;
+    }
+    if (!token_out.is_open()) {
+        std::cerr << "Error: output stream is not open\n";
+        return UNABLE_TO_OPEN_FILE_FOR_WRITING;
+    }
+
+
+
+    TreeNode *curr = root;
+    for (char c; code_in.get(c);) {
+        if (c == '0')
+            curr = curr->leftSubtree();
+        else if (c == '1')
+            curr = curr->rightSubtree();
+        else
+            continue;
+
+        if (curr->leftSubtree()==nullptr && curr->rightSubtree()==nullptr) {
+            token_out << curr->whatWord();
+            token_out << '\n';
+            curr = root;
+        }
+    }
+
+    return NO_ERROR;
+
+}
+

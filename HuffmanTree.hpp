@@ -7,6 +7,7 @@
 #include "utils.hpp"
 #include <vector>
 #include <string>
+#include <fstream>
 
 #include "TreeNode.hpp"
 
