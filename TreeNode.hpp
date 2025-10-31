@@ -13,6 +13,10 @@ public:
     //constructor
     TreeNode(std::string c, int n) : left(nullptr), right(nullptr), word(c), count(n) {
     };
+    //over
+    TreeNode(std::string c) : left(nullptr), right(nullptr), word(c) {};
+
+    TreeNode(): left(nullptr), right(nullptr), word("") {};
 
     //Destructor
     ~TreeNode() = default;
@@ -23,6 +27,7 @@ public:
     void leftSubtree(TreeNode* newLeft) {left = newLeft;}
     void rightSubtree(TreeNode* newRight) {right = newRight;}
     void increaseCount() { count++; }
+    void setWord(std::string newWord) { word = newWord; }
 
     // following two functions will return us the left and right node
     TreeNode *leftSubtree() { return left; }

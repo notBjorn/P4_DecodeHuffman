@@ -8,6 +8,8 @@ add_executable(P4_DecodeHuffman
         TreeNode.hpp
         utils.cpp
         utils.hpp
+        HuffmanTree.cpp
+        HuffmanTree.hpp
 )
 
 

@@ -14,37 +14,69 @@
 
 namespace fs = std::filesystem;
 
-/* some functions from previous project
-// function that I wiil use compare frequencies before writing the freq file
-bool compareFrequency(const std::pair<std::string, int> &a, const std::pair<std::string, int> &b) {
-    if (a.second != b.second) {
-        return a.second > b.second;
+void validateReadFiles(const fs::path& hdrFile, const fs::path& codeFile);
+void checkWriteFiles(const fs::path& decodeFile);
+error_type readHeader(const fs::path& hdrFile, std::vector<std::pair<std::string, std::string> >& header);
+
+
+// -- MAIN BEGINS --
+
+int main(int argc, char *argv[]) {
+    // -- input creation and validation stage --
+    if (argc != 3) {
+        std::cerr << "Usage: " << argv[0] << " <Header filename>  <Code filename>\n";
+        return 1;
     }
-    return a.first < b.first;
+
+    fs::path dirPath(std::string("input_output")); //config for our directory
+    std::string headFN = std::string(argv[1]);         //wanted to do this in the path declaration
+    std::string codeFN = std::string(argv[2]);         //but the complier was crying for no reason
+
+    fs::path headerFile(headFN); //.hdr file name
+    fs::path codeFile(codeFN);   //.code file name
+    fs::path headPath = dirPath / headerFile; //path to the .hdr file
+    fs::path codePath = dirPath / codeFile; //path to the .code file
+    std::string fileBaseName = codeFile.stem().string(); //base name of the files we are gonna create
+
+    fs::path decodeFile(fileBaseName + ".tokens_decoded"); //name of the file we are gonna create
+    fs::path decodePath = dirPath / decodeFile;      //where the decode file is going to be created
+
+    validateReadFiles(headPath, codePath);  //check if the files are valid
+    checkWriteFiles(decodePath); //check if we can write to the directory
+
+    // ** input creation and validation done **
+
+/* //this will be useful to reference when i write the decoded file
+    std::ofstream writeHdr(hdr);
+    if (error_type status; (status = HFtree.writeHeader(writeHdr)) != NO_ERROR)
+        exitOnError(status, hdr.string());
+    writeHdr.close();
+*/
+
+    // -- reading the header file and moving its contents to an appropriate container
+    std::vector<std::pair<std::string, std::string>> header_pairs; //will hold the header pairs
+
+    // read the file and write its content in header_pairs
+    if ( error_type status; (status = readHeader(headPath, header_pairs)) != NO_ERROR)
+        exitOnError(status, headPath.string());
+
+    HuffmanTree decoder();
+    auto build_status = decoder.buildFromHeader(header_pairs);
+    // ...
+    // open the input .code file (call it code_stream) and .tokens_decoded files (out_stream)
+    atuo decode_status = decoder.decode(code_stream, out_stream)
+    // ...
+
+
+
 }
+// ** MAIN END **
 
 
-//function that will write the freq file with the correct format
-void writeFreq(std::string filename, std::vector<std::pair<std::string, int> > freqList) {
-    std::ofstream out(filename, std::ios::out | std::ios::trunc);
 
-    if (!out.is_open()) {
-        std::cerr << "Error: Unable to open file for writing: " << filename << "\n";
-        return;
-    }
 
-    // Write each (word, count) pair: one per line as "word count"
-    for (auto items: freqList) {
-        out << std::setw(10) << items.second << ' ' << items.first << '\n';
-        if (!out) {
-            std::cerr << "Error: Failed while writing to " << filename << "\n";
-            return;
-        }
-    }
-    out.close();
-}
 
- */
+// -- Function definitions ahead --
 
 //check if files that we need to read work or not.
 void validateReadFiles(const fs::path& hdrFile, const fs::path& codeFile) {
@@ -77,6 +109,38 @@ void validateReadFiles(const fs::path& hdrFile, const fs::path& codeFile) {
     std::cout << "Files are valid\n"; //debug comments
 }
 
+
+/*
+input needs to be a path to the header file not just the header file name
+the vector of pairs will store the read files contents
+we will return an error_type this means the function needs to be called in a specific manner, remember that.*/
+error_type readHeader(const fs::path& hdrFile, std::vector<std::pair<std::string, std::string> >& header) {
+    std::ifstream hFile(hdrFile); //open file
+    if (!hFile.is_open()) {
+        return UNABLE_TO_OPEN_FILE;
+    }
+    std::string line;             //string will hold one line at a time
+
+    // the following code only works if the header file we recieved is formatted correctly
+    while (std::getline(hFile, line)) {
+        std::pair<std::string, std::string> pair;
+        for (auto c : line) {
+            if (isalpha(c))
+                pair.first.push_back(c);
+            if (isdigit(c))
+                pair.second.push_back(c);
+        }
+        header.emplace_back(pair);
+    }
+    if (header.empty()) {
+        std::cerr << "Error: Header file is empty\n";
+        return ERR_TYPE_NOT_FOUND;
+    }
+    hFile.close();
+    return NO_ERROR;
+}
+
+
 void checkWriteFiles(const fs::path& decodeFile) {
     std::cout << "checking write permissions\n"; //debug comment
     if (error_type status; (status = directoryExists(decodeFile.parent_path().string())) != NO_ERROR)
@@ -87,41 +151,7 @@ void checkWriteFiles(const fs::path& decodeFile) {
 }
 
 
-// -- MAIN BEGINS --
 
 
-int main(int argc, char *argv[]) {
+// ** Function definition end **
 
-    // -- input creation and validation stage --
-    if (argc != 3) {
-        std::cerr << "Usage: " << argv[0] << " <Header filename>  <Code filename>\n";
-        return 1;
-    }
-
-    fs::path dirPath(std::string("input_output"));//our directory
-    std::string headFN = std::string(argv[1]);//wanted to do this in the path declaration
-    std::string codeFN = std::string(argv[2]);//but the complier was crying for no reason
-
-    fs::path headerFile(headFN); //.hdr file name
-    fs::path codeFile(codeFN);   //.code file name
-    fs::path headPath = dirPath / headerFile; //path to the .hdr file
-    fs::path codePath = dirPath / codeFile; //path to the .code file
-    std::string fileBaseName = codeFile.stem().string(); //base name of the files we are gonna create
-
-    fs::path decodeFile(fileBaseName + ".tokens_decoded"); //name of the file we are gonna create
-    fs::path decodePath = dirPath / decodeFile;      //where the decode file is going to be created
-
-    validateReadFiles(headPath, codePath);
-    checkWriteFiles(decodePath);
-
-    // -- input creation and validation done
-
-
-
-/* //this will be useful to reference when i write the decoded file
-    std::ofstream writeHdr(hdr);
-    if (error_type status; (status = HFtree.writeHeader(writeHdr)) != NO_ERROR)
-        exitOnError(status, hdr.string());
-    writeHdr.close();
-*/
-}
