@@ -48,13 +48,6 @@ int main(int argc, char *argv[]) {
 
     // ** input creation and validation done **
 
-/* //this will be useful to reference when i write the decoded file
-    std::ofstream writeHdr(hdr);
-    if (error_type status; (status = HFtree.writeHeader(writeHdr)) != NO_ERROR)
-        exitOnError(status, hdr.string());
-    writeHdr.close();
-*/
-
     // -- reading the header file and moving its contents to an appropriate container
     std::vector<std::pair<std::string, std::string>> header_pairs; //will hold the header pairs
 
@@ -64,10 +57,12 @@ int main(int argc, char *argv[]) {
 
     HuffmanTree decoder = HuffmanTree::buildFromHeader(header_pairs);
 
+    // ** Huffman tree creation should be done here
+
 
 
     // open the input .code file (call it code_stream) and .tokens_decoded files (out_stream)
-    auto decode_status = decoder.decode(code_stream, out_stream)
+    auto decode_status = decoder.decode(code_stream, out_stream);
 
 
 
