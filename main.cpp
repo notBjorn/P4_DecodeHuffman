@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
 
 //check if files that we need to read work or not.
 void validateReadFiles(const fs::path& hdrFile, const fs::path& codeFile) {
-    std::cout << "Validating files\n"; //debug comment
+    //std::cout << "Validating files\n"; //debug comment
     if (error_type status; (status = directoryExists(hdrFile.parent_path().string())) != NO_ERROR)
         exitOnError(status, hdrFile.parent_path().string());
 
@@ -115,7 +115,7 @@ void validateReadFiles(const fs::path& hdrFile, const fs::path& codeFile) {
         std::cerr << "Error: Code File is inappropriate\n";
     }
     cFile.close();
-    std::cout << "Files are valid\n"; //debug comments
+    //std::cout << "Files are valid\n"; //debug comments
 }
 
 
@@ -151,12 +151,12 @@ error_type readHeader(const fs::path& hdrFile, std::vector<std::pair<std::string
 
 
 void checkWriteFiles(const fs::path& decodeFile) {
-    std::cout << "checking write permissions\n"; //debug comment
+    //std::cout << "checking write permissions\n"; //debug comment
     if (error_type status; (status = directoryExists(decodeFile.parent_path().string())) != NO_ERROR)
         exitOnError(status, decodeFile.parent_path().string());
     if (error_type status; (status = canOpenForWriting(decodeFile.string())) != NO_ERROR)
         exitOnError(status, decodeFile.filename().string());
-    std::cout << "We can write\n"; //debug comments
+    //std::cout << "We can write\n"; //debug comments
 }
 
 
