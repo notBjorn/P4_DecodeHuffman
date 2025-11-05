@@ -23,7 +23,7 @@ void HuffmanTree::destroyTree(TreeNode* node) noexcept {
 }
 
 
-HuffmanTree HuffmanTree::(const std::vector<std::pair<std::string, std::string>>& headerIn) {
+HuffmanTree HuffmanTree::buildFromHeader(const std::vector<std::pair<std::string, std::string>>& headerIn) {
     //check if we have an empty header file
     HuffmanTree HFtree;
     if (headerIn.empty())
