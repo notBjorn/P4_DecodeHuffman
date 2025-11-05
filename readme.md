@@ -25,3 +25,47 @@ All the code in this project is mine. I did use lookup syntax for a specific for
 
 ## **Testing & Status**
 **The program, to the best of my knowledge, is working perfectly**. Before I had the script I ran the code with diff command and my own tokens file and I found no difference and after running the scripts that the professor provided I still have found no differences. The process of writing and testing the code was pretty straightforward as I was already aware of most of the issues surrounding the project from my experience with Project 3.
+
+### Output from scripts
+
+```txt
+rsharma@blue:~/P4_DecodeHuffman$ bash compile_and_test_project4.bash 
+Compiling: g++ -std=c++20 -Wall HuffmanTree.cpp main.cpp utils.cpp -o p3_complete.x
+
+Scanning for inputs in: input_output
+
+==> Running: p3_complete.x on the_toil_of_trace_and_trail.hdr the_toil_of_trace_and_trail.code
+Comparing: input_output/the_toil_of_trace_and_trail.tokens_decoded  and  /home/faculty/kooshesh/cs315_fall2025/project4/data/the_toil_of_trace_and_trail.tokens
+
+==> Running: p3_complete.x on the_dominant_primordial_beast.hdr the_dominant_primordial_beast.code
+Comparing: input_output/the_dominant_primordial_beast.tokens_decoded  and  /home/faculty/kooshesh/cs315_fall2025/project4/data/the_dominant_primordial_beast.tokens
+
+==> Running: p3_complete.x on for_the_love_of_a_man.hdr for_the_love_of_a_man.code
+Comparing: input_output/for_the_love_of_a_man.tokens_decoded  and  /home/faculty/kooshesh/cs315_fall2025/project4/data/for_the_love_of_a_man.tokens
+
+==> Running: p3_complete.x on who_has_won_to_mastership.hdr who_has_won_to_mastership.code
+Comparing: input_output/who_has_won_to_mastership.tokens_decoded  and  /home/faculty/kooshesh/cs315_fall2025/project4/data/who_has_won_to_mastership.tokens
+
+==> Running: p3_complete.x on the_law_of_club_and_fang.hdr the_law_of_club_and_fang.code
+Comparing: input_output/the_law_of_club_and_fang.tokens_decoded  and  /home/faculty/kooshesh/cs315_fall2025/project4/data/the_law_of_club_and_fang.tokens
+
+==> Running: p3_complete.x on into_the_primitive.hdr into_the_primitive.code
+Comparing: input_output/into_the_primitive.tokens_decoded  and  /home/faculty/kooshesh/cs315_fall2025/project4/data/into_the_primitive.tokens
+
+==> Running: p3_complete.x on tableOfContents_TheCallOfWild.hdr tableOfContents_TheCallOfWild.code
+Comparing: input_output/tableOfContents_TheCallOfWild.tokens_decoded  and  /home/faculty/kooshesh/cs315_fall2025/project4/data/tableOfContents_TheCallOfWild.tokens
+
+==> Running: p3_complete.x on the_sounding_of_the_call.hdr the_sounding_of_the_call.code
+Comparing: input_output/the_sounding_of_the_call.tokens_decoded  and  /home/faculty/kooshesh/cs315_fall2025/project4/data/the_sounding_of_the_call.tokens
+
+==> Running: p3_complete.x on the_call_of_the_wild.hdr the_call_of_the_wild.code
+Comparing: input_output/the_call_of_the_wild.tokens_decoded  and  /home/faculty/kooshesh/cs315_fall2025/project4/data/the_call_of_the_wild.tokens
+
+==> Running: p3_complete.x on lab08_input.hdr lab08_input.code
+Comparing: input_output/lab08_input.tokens_decoded  and  /home/faculty/kooshesh/cs315_fall2025/project4/data/lab08_input.tokens
+
+==> Running: p3_complete.x on TheBells.hdr TheBells.code
+Comparing: input_output/TheBells.tokens_decoded  and  /home/faculty/kooshesh/cs315_fall2025/project4/data/TheBells.tokens
+
+Summary: 11 match(es), 0 diff(s).
+```
